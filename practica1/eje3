@@ -1,0 +1,53 @@
+package eje3;
+
+public class Estadistica {
+    private double[] numeros;
+
+   
+    public Estadistica(double[] numeros) {
+        this.numeros = numeros;
+    }
+
+    // calcula el promedio
+    public double promedio() {
+        double suma = 0;
+        for (double num : numeros) {
+            suma += num;
+        }
+        return suma / numeros.length;
+    }
+
+    // la desviación estándar
+    public double desviacion() {
+        double prom = promedio();
+        double suma = 0;
+        for (double num : numeros) {
+            suma += Math.pow(num - prom, 2);
+        }
+        return Math.sqrt(suma / (numeros.length - 1));
+    }
+}
+
+
+package eje3;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double[] nums = new double[10];
+
+        System.out.println("Ingrese 10 números:");
+        for (int i = 0; i < 10; i++) {
+            nums[i] = sc.nextDouble();
+        }
+
+        Estadistica est = new Estadistica(nums);
+
+        System.out.println("El promedio es " + est.promedio());
+        System.out.println("La desviación estándar es " + est.desviacion());
+
+        sc.close();
+    }
+}
