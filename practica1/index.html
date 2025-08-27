@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil de Cash Israel Gomez Blanco</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px #000;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        a {
+            color: #ff6f61;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: #ffd700;
+            text-shadow: 1px 1px 5px #000;
+        }
+
+        .fecha {
+            font-style: italic;
+            color: #c0c0c0;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cash Israel Gomez Blanco</h1>
+        <p class="fecha">Fecha de hoy: <span id="fecha"></span></p>
+        <p>Mi repositorio de GitHub: 
+            <a href="https://github.com/CASHpotro/programacion2" target="_blank">
+                https://github.com/CASHpotro/programacion2
+            </a>
+        </p>
+    </div>
+
+    <script>
+        const fechaActual = new Date();
+        const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('fecha').textContent = fechaActual.toLocaleDateString('es-ES', opciones);
+    </script>
+</body>
+</html>
