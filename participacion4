@@ -1,0 +1,68 @@
+package labos;
+
+public class Participacion4 {
+    private double x;
+    private double y;
+    private double radio;
+
+    
+    public Participacion4() {
+        this(0, 0, 1);
+    }
+
+    
+    public Participacion4(double x, double y, double radio) {
+        this.x = x;
+        this.y = y;
+        this.radio = radio;
+    }
+
+   
+    public double getX() { return x; }
+    public double getY() { return y; }
+    public double getRadio() { return radio; }
+
+    // area
+    public double getArea() {
+        return Math.PI * radio * radio;
+    }
+
+    // perimetro
+    public double getPerimetro() {
+        return 2 * Math.PI * radio;
+    }
+
+    //punto (px, py)
+    public boolean contiene(double px, double py) {
+        double distancia = Math.sqrt(Math.pow(px - x, 2) + Math.pow(py - y, 2));
+        return distancia <= radio;
+    }
+
+    // otro círculo
+    public boolean contiene(Participacion4 c) {
+        double distancia = Math.sqrt(Math.pow(c.x - x, 2) + Math.pow(c.y - y, 2));
+        return distancia + c.radio <= this.radio;
+    }
+
+    //sobrepone con otro círculo
+    public boolean sobrepone(Participacion4 c) {
+        double distancia = Math.sqrt(Math.pow(c.x - x, 2) + Math.pow(c.y - y, 2));
+        return distancia <= (this.radio + c.radio) && distancia >= Math.abs(this.radio - c.radio);
+    }
+}
+
+CODIGO MAIN
+package labos;
+
+public class main {
+    public static void main(String[] args) {
+    	Participacion4 c1 = new Participacion4(2, 0, 1);
+
+        System.out.println("Área de c1: " + c1.getArea());
+        System.out.println("Perímetro de c1: " + c1.getPerimetro());
+
+        System.out.println("c1.contiene(2.5, 0): " + (c1.contiene(2.5, 0) ? "Verdad" : "Falso"));
+        System.out.println("c1.contiene(new Circulo2D(2, 0, 0.5)): " + (c1.contiene(new Participacion4(2, 0, 0.5)) ? "Verdad" : "Falso"));
+        System.out.println("c1.sobrepone(new Circulo2D(0, 0, 2)): " + (c1.sobrepone(new Participacion4(0, 0, 2)) ? "Verdad" : "Falso"));
+    }
+}
