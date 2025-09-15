@@ -1,0 +1,90 @@
+public class AlgebraVectorial {
+    private double x, y, z;
+    private static final double TOL = 1e-6;
+
+    // consructor basio
+    public AlgebraVectorial() { 
+        this(0, 0, 0); 
+    }
+    // otro consructor con datoz
+    public AlgebraVectorial(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    // retorna como string, nose muy bien
+    @Override
+    public String toString() {
+        return "[" + x + ", " + y + ", " + z + "]";
+    }
+
+    // suma de vectores, creo q asi era
+    public AlgebraVectorial suma(AlgebraVectorial v) {
+        return new AlgebraVectorial(this.x + v.x, this.y + v.y, this.z + v.z);
+    }
+
+    // resta nose si esta bien pero funca
+    public AlgebraVectorial resta(AlgebraVectorial v) {
+        return new AlgebraVectorial(this.x - v.x, this.y - v.y, this.z - v.z);
+    }
+
+    // calcula el modulo del vector (la longuitud o algo asi)
+    public double modulo() {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
+    // producto punto escalar xd
+    public double productoPunto(AlgebraVectorial v) {
+        return this.x * v.x + this.y * v.y + this.z * v.z;
+    }
+
+    // producto cruz creo ke se llamaba
+    public AlgebraVectorial productoCruz(AlgebraVectorial v) {
+        double cx = this.y * v.z - this.z * v.y;
+        double cy = this.z * v.x - this.x * v.z;
+        double cz = this.x * v.y - this.y * v.x;
+        return new AlgebraVectorial(cx, cy, cz);
+    }
+
+    // revisa si son perpendikulares
+    public boolean perpendicular(AlgebraVectorial v) {
+        return Math.abs(productoPunto(v)) < TOL;
+    }
+
+    // revisa si son paralelos creo xd
+    public boolean paralelo(AlgebraVectorial v) {
+        return productoCruz(v).modulo() < TOL;
+    }
+
+    // proyecta un vector en otro (nose si se dice asi)
+    public AlgebraVectorial proyeccion(AlgebraVectorial b) {
+        double magnitud = b.modulo();
+        if (magnitud < TOL) return new AlgebraVectorial(0, 0, 0);
+
+        double esc = productoPunto(b) / (magnitud * magnitud);
+        return new AlgebraVectorial(b.x * esc, b.y * esc, b.z * esc);
+    }
+
+    // componente de un vector en otro (esto me confunde pero funca)
+    public double componente(AlgebraVectorial b) {
+        double magnitud = b.modulo();
+        if (magnitud < TOL) return 0.0;
+        return productoPunto(b) / magnitud;
+    }
+}
+MAIN
+// programa principal xd
+public class Main {
+    public static void main(String[] args) {
+        AlgebraVectorial a = new AlgebraVectorial(1, 0, 0);
+        AlgebraVectorial b = new AlgebraVectorial(0, 1, 0);
+
+        System.out.println("Vector a = " + a);
+        System.out.println("Vector b = " + b);
+        System.out.println("¿Son perpendiculares? " + a.perpendicular(b));
+        System.out.println("¿Son paralelos? " + a.paralelo(b));
+        System.out.println("Proyeccion de a sobre b: " + a.proyeccion(b));
+        System.out.println("Componente de a en b: " + a.componente(b));
+    }
+}
