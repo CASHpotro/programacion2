@@ -1,0 +1,108 @@
+public class Algebra_Vectorial {
+    private double x;
+    private double y;
+    private double z;
+    private static final double TOL = 1e-6;
+
+    // consructor vacio xd
+    public Algebra_Vectorial() { 
+        this(0, 0, 0); 
+    }
+
+    // consructor con valores, nose si era asi
+    public Algebra_Vectorial(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    // retorna como string pa imprimir
+    @Override
+    public String toString() { 
+        return "(" + x + ", " + y + ", " + z + ")"; 
+    }
+
+    // modulo del vector (la longuitud o algo)
+    public double modulo() {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
+    // suma de vectores, funciona
+    public Algebra_Vectorial suma(Algebra_Vectorial v) {
+        return new Algebra_Vectorial(x + v.x, y + v.y, z + v.z);
+    }
+
+    // resta nose si esta bien escrito pero sirve
+    public Algebra_Vectorial resta(Algebra_Vectorial v) {
+        return new Algebra_Vectorial(x - v.x, y - v.y, z - v.z);
+    }
+
+    // multiplicar por escalar (creo)
+    public Algebra_Vectorial escalar(double r) {
+        return new Algebra_Vectorial(r * x, r * y, r * z);
+    }
+
+    // normalizar el vector (para q mida 1)
+    public Algebra_Vectorial normalizar() {
+        double magnitud = modulo();
+        if (magnitud < TOL) return new Algebra_Vectorial(0, 0, 0);
+        return new Algebra_Vectorial(x / magnitud, y / magnitud, z / magnitud);
+    }
+
+    // producto punto escalar xd
+    public double productoPunto(Algebra_Vectorial v) {
+        return x * v.x + y * v.y + z * v.z;
+    }
+
+    // producto cruzado (el de la mano derecha creo)
+    public Algebra_Vectorial productoCruz(Algebra_Vectorial v) {
+        double cx = y * v.z - z * v.y;
+        double cy = z * v.x - x * v.z;
+        double cz = x * v.y - y * v.x;
+        return new Algebra_Vectorial(cx, cy, cz);
+    }
+
+    // si el producto punto es cero son perpendikulares
+    public boolean perpendicular(Algebra_Vectorial v) {
+        return Math.abs(productoPunto(v)) < TOL;
+    }
+
+    // si el producto cruzado es cero son paralelos
+    public boolean paralelo(Algebra_Vectorial v) {
+        return productoCruz(v).modulo() < TOL;
+    }
+
+    // proyeccion de un vector en otro (a sobre b)
+    public Algebra_Vectorial proyeccion(Algebra_Vectorial b) {
+        double magnitud = b.modulo();
+        if (magnitud < TOL) return new Algebra_Vectorial(0, 0, 0);
+        double esc = productoPunto(b) / (magnitud * magnitud);
+        return new Algebra_Vectorial(b.x * esc, b.y * esc, b.z * esc);
+    }
+
+    // componente de a en direccion de b
+    public double componente(Algebra_Vectorial b) {
+        double magnitud = b.modulo();
+        if (magnitud < TOL) return 0.0;
+        return productoPunto(b) / magnitud;
+    }
+}
+MAIN
+// clase main para provar
+public class Main {
+    public static void main(String[] args) {
+        Algebra_Vectorial a = new Algebra_Vectorial(3, 0, 0);
+        Algebra_Vectorial b = new Algebra_Vectorial(6, 0, 0);
+        Algebra_Vectorial c = new Algebra_Vectorial(0, 2, 0);
+
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+        System.out.println("c: " + c);
+
+        System.out.println("perpendicular (a,c): " + a.perpendicular(c));
+        System.out.println("paralelo (a,b): " + a.paralelo(b));
+        System.out.println("proyeccion de a sobre c: " + a.proyeccion(c));
+        System.out.println("componente de a en c: " + a.componente(c));
+        System.out.println("normalizar a: " + a.normalizar());
+    }
+}
