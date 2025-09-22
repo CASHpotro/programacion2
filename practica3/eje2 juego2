@@ -1,0 +1,145 @@
+// klace base del juegito xd
+// aki se guarda vidas y rekord jaja
+public class Juego {
+    protected int numeroDeVidas; // cuantas vidas te kdan lol
+    protected int record;        // rekord de wins
+
+    public Juego(int numeroDeVidas) {
+        this.numeroDeVidas = numeroDeVidas;
+        this.record = 0;
+    }
+
+    public void reiniciaPartida(int numeroDeVidas) {
+        this.numeroDeVidas = numeroDeVidas;
+    }
+
+    public void actualizaRecord() {
+        record++;
+        System.out.println("nuevo rekord: " + record);
+    }
+
+    public boolean quitaVida() {
+        numeroDeVidas--;
+        if (numeroDeVidas > 0) {
+            System.out.println("te kdan " + numeroDeVidas + " vidas xd");
+            return true;
+        } else {
+            System.out.println("ya no t kdan vidas, rip");
+            return false;
+        }
+    }
+}
+import java.util.Scanner;
+import java.util.Random;
+
+// klace hija ke ereda de Juego xd
+// aki se juega adivinar numerito lokazo
+public class JuegoAdivinaNumero extends Juego {
+    protected int numeroAAdivinar; // numerito sekreto jaja
+
+    public JuegoAdivinaNumero(int numeroDeVidas) {
+        super(numeroDeVidas);
+    }
+
+    // metodo ke valida si el numero es valido xd
+    // default: solo ke este entre 0 y 10
+    public boolean validaNumero(int n) {
+        return n >= 0 && n <= 10;
+    }
+
+    public void juega() {
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+
+        reiniciaPartida(numeroDeVidas);
+        numeroAAdivinar = rand.nextInt(11);
+
+        System.out.println("adivina el numero de 0 a 10 we");
+
+        while (true) {
+            System.out.print("mete un numero: ");
+            int intento = sc.nextInt();
+
+            // aki validamos xd
+            if (!validaNumero(intento)) {
+                System.out.println("numero no valido xd intenta d nuevo");
+                continue;
+            }
+
+            if (intento == numeroAAdivinar) {
+                System.out.println("acertaste bro, re pro");
+                actualizaRecord();
+                break;
+            } else {
+                if (quitaVida()) {
+                    if (intento < numeroAAdivinar) {
+                        System.out.println("el numero es MAS grande q " + intento);
+                    } else {
+                        System.out.println("el numero es MAS chiko q " + intento);
+                    }
+                } else {
+                    System.out.println("perdiste :c el numero era " + numeroAAdivinar);
+                    break;
+                }
+            }
+        }
+    }
+}
+// klace ke solo deja pares lokazo
+public class JuegoAdivinaPar extends JuegoAdivinaNumero {
+
+    public JuegoAdivinaPar(int numeroDeVidas) {
+        super(numeroDeVidas);
+    }
+
+    // reescribimos validacion pa q sea par
+    @Override
+    public boolean validaNumero(int n) {
+        if (n < 0 || n > 10) return false;
+        if (n % 2 == 0) {
+            return true;
+        } else {
+            System.out.println("ese numero es impar wtf, no vale xd");
+            return false;
+        }
+    }
+}
+// klace ke solo deja impares lokazo
+public class JuegoAdivinaImpar extends JuegoAdivinaNumero {
+
+    public JuegoAdivinaImpar(int numeroDeVidas) {
+        super(numeroDeVidas);
+    }
+
+    // reescribimos validacion pa q sea impar
+    @Override
+    public boolean validaNumero(int n) {
+        if (n < 0 || n > 10) return false;
+        if (n % 2 != 0) {
+            return true;
+        } else {
+            System.out.println("ese numero es par wtf, no vale xd");
+            return false;
+        }
+    }
+}
+MAIN
+// aki ta el main pa probar el juegazo xd
+public class Aplicacion {
+    public static void main(String[] args) {
+        // krear los games kon 3 vidas
+        JuegoAdivinaNumero j1 = new JuegoAdivinaNumero(3);
+        JuegoAdivinaPar j2 = new JuegoAdivinaPar(3);
+        JuegoAdivinaImpar j3 = new JuegoAdivinaImpar(3);
+
+        // jugamos todos xd
+        System.out.println("--- JUEGO NORMAL ---");
+        j1.juega();
+
+        System.out.println("--- JUEGO PAR ---");
+        j2.juega();
+
+        System.out.println("--- JUEGO IMPAR ---");
+        j3.juega();
+    }
+}
