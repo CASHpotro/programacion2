@@ -1,0 +1,96 @@
+// klace base del juegito xd
+// aki se guarda vidas y rekord jaja
+public class Juego {
+    protected int numeroDeVidas; // cuantas vidas te kdan lol
+    protected int record;        // rekord de wins
+
+    // konstruktor ke resive vidas
+    public Juego(int numeroDeVidas) {
+        this.numeroDeVidas = numeroDeVidas;
+        this.record = 0; // obvio komiensa en 0 xd
+    }
+
+    // resetea la partia pa volver a jugar otra ves
+    public void reiniciaPartida(int numeroDeVidas) {
+        this.numeroDeVidas = numeroDeVidas;
+    }
+
+    // si ganas se suma el rekord jajaja izi
+    public void actualizaRecord() {
+        record++;
+        System.out.println("nuevo rekord: " + record);
+    }
+
+    // kita una vida, si aun hay devuelve true sino f bro
+    public boolean quitaVida() {
+        numeroDeVidas--;
+        if (numeroDeVidas > 0) {
+            System.out.println("te kdan " + numeroDeVidas + " vidas xd");
+            return true;
+        } else {
+            System.out.println("ya no t kdan vidas, rip");
+            return false;
+        }
+    }
+}
+
+import java.util.Scanner;
+import java.util.Random;
+
+// klace hija ke ereda de Juego xd
+// aki se juega adivinar numerito lokazo
+public class JuegoAdivinaNumero extends Juego {
+    private int numeroAAdivinar; // numerito sekreto jaja
+
+    // konstruktor, pasa vidas al padre pq si no no funka
+    public JuegoAdivinaNumero(int numeroDeVidas) {
+        super(numeroDeVidas);
+    }
+
+    // metodo del game, aki se juega
+    public void juega() {
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+
+        // reseteamos las vidas otra ves pa empesar bien
+        reiniciaPartida(numeroDeVidas);
+
+        // generamos numero random de 0 a 10 omg
+        numeroAAdivinar = rand.nextInt(11);
+
+        System.out.println("adivina el numero de 0 a 10 we");
+
+        while (true) {
+            System.out.print("mete un numero: ");
+            int intento = sc.nextInt();
+
+            if (intento == numeroAAdivinar) {
+                System.out.println("acertaste bro, re pro");
+                actualizaRecord();
+                break; // gg izi win xd
+            } else {
+                if (quitaVida()) {
+                    if (intento < numeroAAdivinar) {
+                        System.out.println("el numero es MAS grande q " + intento);
+                    } else {
+                        System.out.println("el numero es MAS chiko q " + intento);
+                    }
+                } else {
+                    System.out.println("perdiste :c el numero era " + numeroAAdivinar);
+                    break;
+                }
+            }
+        }
+    }
+}
+MAIN
+// aki ta el main pa probar el juegazo xd
+public class Aplicacion {
+    public static void main(String[] args) {
+        // krear el game con 3 vidas nomas
+        JuegoAdivinaNumero juego = new JuegoAdivinaNumero(3);
+
+        // empesamos a jugar lokura
+        juego.juega();
+    }
+}
