@@ -1,0 +1,99 @@
+import java.util.Scanner;
+
+// clase fantasma xd no se puede usar directo
+abstract class Empleado {
+    protected String nombre
+
+    public Empleado(String nombre) {
+        this.nombre = nombre // guardo el apodo del pana jaja
+    }
+
+    public abstract double CalcularSalarioMensual()
+
+    @Override
+    public String toString() {
+        return "Empleado facha: " + nombre // devuelve el nombre fachero
+    }
+}
+
+// estos cobran por año gg
+class EmpleadoTiempoCompleto extends Empleado {
+    private double salarioAnual
+
+    public EmpleadoTiempoCompleto(String nombre double salarioAnual) {
+        super(nombre)
+        this.salarioAnual = salarioAnual // guardo la platita pa 12 meses xd
+    }
+
+    @Override
+    public double CalcularSalarioMensual() {
+        return salarioAnual / 12.0 // dividir entre 12 boom sueldo mensual crack
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " gana al año " + salarioAnual +
+                " gana al mes " + CalcularSalarioMensual() + " deah xd"
+    }
+}
+
+// estos chambean por horas pobre pana
+class EmpleadoTiempoHorario extends Empleado {
+    private double horasTrabajadas
+    private double tarifaHora
+
+    public EmpleadoTiempoHorario(String nombre double horasTrabajadas double tarifaHora) {
+        super(nombre)
+        this.horasTrabajadas = horasTrabajadas
+        this.tarifaHora = tarifaHora
+    }
+
+    @Override
+    public double CalcularSalarioMensual() {
+        return horasTrabajadas * tarifaHora // multiplicar nomas como la tiendita xd
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " horas " + horasTrabajadas +
+                " tarifa " + tarifaHora +
+                " sueldo " + CalcularSalarioMensual() + " jajaja"
+    }
+}
+
+// main el jefe final xd
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in)
+        Empleado[] empleados = new Empleado[5] // cinco nomas no pidás más xd
+
+        System.out.println("=== mete 3 empleados fijos ===")
+        for (int i = 0 i < 3 i++) {
+            System.out.print("nombre: ")
+            String nombre = sc.nextLine()
+            System.out.print("sueldo anual: ")
+            double salario = sc.nextDouble()
+            sc.nextLine()
+            empleados[i] = new EmpleadoTiempoCompleto(nombre salario)
+        }
+
+        System.out.println("=== mete 2 empleados por horas ===")
+        for (int i = 3 i < 5 i++) {
+            System.out.print("nombre: ")
+            String nombre = sc.nextLine()
+            System.out.print("horas: ")
+            double horas = sc.nextDouble()
+            System.out.print("tarifa: ")
+            double tarifa = sc.nextDouble()
+            sc.nextLine()
+            empleados[i] = new EmpleadoTiempoHorario(nombre horas tarifa)
+        }
+
+        System.out.println("=== empleados full lista xd ===")
+        for (Empleado emp : empleados) {
+            System.out.println(emp.toString()) // enseño la data god
+        }
+
+        sc.close() // cierro o explota la pc xd
+    }
+}
