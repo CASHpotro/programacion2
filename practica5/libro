@@ -1,0 +1,36 @@
+package PracticaLaboratorio5;
+import java.util.ArrayList;
+class Libro {
+    private String titulo;
+    private String isbn;
+    private Autor autor;
+    private ArrayList<Pagina> paginas = new ArrayList<>();
+
+    public Libro(String titulo, String isbn) {
+        this.titulo = titulo;
+        this.isbn = isbn;
+    }
+
+    public void agregarPagina(int numero, String contenido) {
+        paginas.add(new Pagina(numero, contenido));
+    }
+
+    public void leer() {
+        for (Pagina p : paginas)
+            p.mostrarPagina();
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void mostrarInfo() {
+        System.out.println("Libro: " + titulo + " | ISBN: " + isbn);
+        if (autor != null)
+            autor.mostrarInfo();
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+}
