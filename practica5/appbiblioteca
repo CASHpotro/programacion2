@@ -1,0 +1,33 @@
+package PracticaLaboratorio5;
+
+import javax.swing.*;
+
+public class AppBiblioteca {
+    public static void main(String[] args) {
+        Biblioteca biblio = new Biblioteca("Biblioteca UMSA", "Lunes a Viernes", "08:00", "18:00");
+
+        Autor autor1 = new Autor("Gabriel García Márquez", "Colombiano");
+        Autor autor2 = new Autor("Miguel de Cervantes", "Española");
+        biblio.agregarAutor(autor1);
+        biblio.agregarAutor(autor2);
+
+        Libro libro1 = new Libro("Cien años de soledad", "978-3-16-148410-0");
+        Libro libro2 = new Libro("El Quijote de la Mancha","979-3-16-148410-0");
+        libro1.setAutor(autor1);
+        libro2.setAutor(autor2);
+        libro1.agregarPagina(1, "Muchos años después, frente al pelotón de fusilamiento...");
+        libro1.agregarPagina(2, "El coronel Aureliano Buendía había de recordar...");
+        libro2.agregarPagina(1,"En aquella noche estrellada yo vi...");
+        libro2.agregarPagina(2,"La mayoria de mis fantasmas siguen persiguiendome...");
+        biblio.agregarLibro(libro1);
+        biblio.agregarLibro(libro2);
+
+        Estudiante estudiante1 = new Estudiante("E001", "Madelin Rodriguez");
+        Estudiante estudiante2 = new Estudiante("E002","Gustavo Mamani");
+        biblio.prestarLibro(estudiante1, libro1);
+        biblio.prestarLibro(estudiante2, libro2);
+
+        biblio.mostrarEstado();
+        biblio.cerrarBiblioteca();
+    }
+}
